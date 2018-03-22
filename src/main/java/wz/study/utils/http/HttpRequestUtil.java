@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 
 public class HttpRequestUtil {
@@ -227,11 +228,37 @@ public class HttpRequestUtil {
         return result;
     }
 
-    public static void main(String[] args) {
-        String url = "https://item.jd.com/5185333.html";
-        String s = HttpRequestUtil.sendGet(url, null);
+    public static void main(String[] args) throws InterruptedException {
+        /*String url = "http://localhost:8808/distance";
+        String param = "testImageUrl=http://172.20.1.64/wdgp01/M01/00/11/rBQBP1jPU-iAJjFWAABgS-LJYa8358.jpg&baseImageUrl=http://172.20.1.64/wdgp01/M00/00/10/rBQBQljPTcmAZyHJAAQYc-7aziQ921.jpg";
+        String s = HttpRequestUtil.sendPost(url, param,false);
+        System.out.println(s);*/
 
-        System.out.println(s);
+        final CountDownLatch latch = new CountDownLatch(90);
+        long start = System.currentTimeMillis();
+        for(int i =0;i<100;i++)
+        {
+            Thread t = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    String url = "http://localhost:8808/distance";
+                    String param = "testImageUrl=http://172.20.1.64/wdgp01/M01/00/11/rBQBP1jPU-iAJjFWAABgS-LJYa8358.jpg&baseImageUrl=http://172.20.1.64/wdgp01/M00/00/10/rBQBQljPTcmAZyHJAAQYc-7aziQ921.jpg";
+                    System.out.println("send..");
+                    String s = HttpRequestUtil.sendPost(url, param,false);
+                    System.out.println(s);
+                    latch.countDown();
+                    /*String url = "http://localhost:8080/miaosha";
+                    String param = "testImageUrl=http://172.20.1.64/wdgp01/M01/00/11/rBQBP1jPU-iAJjFWAABgS-LJYa8358.jpg&baseImageUrl=http://172.20.1.64/wdgp01/M00/00/10/rBQBQljPTcmAZyHJAAQYc-7aziQ921.jpg";
+                    System.out.println("send..");
+                    String s = HttpRequestUtil.sendPost(url, param,false);
+                    System.out.println(s);*/
+                }
+            });
+            t.start();
+        }
+        latch.await();
+        System.out.println("============================");
+        System.out.println(System.currentTimeMillis()-start);
     }
 
 }
