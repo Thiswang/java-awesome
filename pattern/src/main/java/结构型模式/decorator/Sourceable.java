@@ -1,0 +1,11 @@
+/**
+ * Copyright (C), 2011-2017, 微贷网.
+ */
+package 结构型模式.decorator;
+
+/**
+ * @author wangzhe 2017/12/28.
+ */
+public interface Sourceable {
+    public void method();
+}
