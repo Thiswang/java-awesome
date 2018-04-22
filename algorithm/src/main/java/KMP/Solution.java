@@ -25,8 +25,40 @@ public class Solution {
         }
         return true;
     }
+    public boolean wordPattern1(String pattern, String str) {
+
+        String[] strs = str.split(" ");
+        if(pattern.length() != strs.length) return false;
+
+        HashMap<String,Integer> parternData = new HashMap<>();
+        HashMap<String,Integer> strData = new HashMap<>();
+
+
+        for(int i=0;i<strs.length;i++){
+
+            if(parternData.containsKey(String.valueOf(pattern.charAt(i))) != strData.containsKey(strs[i])){
+                return false;
+            }
+            else if(!parternData.containsKey(String.valueOf(pattern.charAt(i))) && !strData.containsKey(strs[i])){
+                parternData.put(String.valueOf(pattern.charAt(i)),i);
+                strData.put(strs[i],i);
+            }
+            else if(parternData.containsKey(String.valueOf(pattern.charAt(i))) && strData.containsKey(strs[i])){
+                Integer i1 = parternData.get(String.valueOf(pattern.charAt(i)));
+                Integer i2 = strData.get(strs[i]);
+                if(i1!=null && i2!=null && !i1.equals(i2)){
+                    return false;
+                }
+            }
+
+
+        }
+
+
+        return true;
+    }
 
     public static void main(String[] args) {
-        System.out.println(new Solution().wordPattern("abba","北京 杭州 北京 北京"));
+        System.out.println(new Solution().wordPattern1("abba","北京 杭州 杭州 北京"));
     }
 }

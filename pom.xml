@@ -28,6 +28,10 @@
         <module>utils</module>
         <module>rabbitmq</module>
         <module>rocketmq</module>
+        <module>test</module>
+        <module>testng</module>
+        <module>globallock_zookeeper</module>
+        <module>globallock_redis</module>
     </modules>
 
     <dependencies>
