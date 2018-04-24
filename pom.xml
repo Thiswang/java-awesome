@@ -32,6 +32,7 @@
         <module>testng</module>
         <module>globallock_zookeeper</module>
         <module>globallock_redis</module>
+        <module>file</module>
     </modules>
 
     <dependencies>
